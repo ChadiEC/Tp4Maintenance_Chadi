@@ -1,0 +1,13 @@
+FROM eclipse-temurin:11-jre
+
+WORKDIR /app
+
+COPY target/todo-0.0.1-SNAPSHOT.jar app.jar
+
+ENV SPRING_H2_CONSOLE_ENABLED=true
+ENV SPRING_H2_CONSOLE_SETTINGS_WEB_ALLOW_OTHERS=true
+ENV SERVER_ADDRESS=0.0.0.0
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
