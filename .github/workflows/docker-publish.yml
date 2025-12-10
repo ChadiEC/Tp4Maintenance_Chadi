@@ -30,7 +30,7 @@ jobs:
         run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/todo-api:${{ github.sha }} .
+        run: docker build -t ghcr.io/chadiec/todo-api:$(git rev-parse --short HEAD) .
 
       - name: Push image to GHCR
-        run: docker push ghcr.io/${{ github.repository_owner }}/todo-api:${{ github.sha }}
+        run: docker push ghcr.io/chadiec/todo-api:$(git rev-parse --short HEAD)
