@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./todo-app-jdbc-spring
+        working-directory: ./api
 
     steps:
       - name: Checkout repository
