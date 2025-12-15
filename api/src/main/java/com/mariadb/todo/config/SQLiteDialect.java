@@ -1,51 +1,43 @@
 package com.mariadb.todo.config;
 
-import java.sql.Types;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.function.StandardSQLFunction;
+import org.hibernate.query.sqm.function.FunctionRegistry;
+import org.hibernate.query.sqm.function.NamedSqmFunctionDescriptor;
 import org.hibernate.type.StandardBasicTypes;
 
 public class SQLiteDialect extends Dialect {
 
     public SQLiteDialect() {
-        registerColumnType(Types.BIT, "boolean");
-        registerColumnType(Types.TINYINT, "tinyint");
-        registerColumnType(Types.SMALLINT, "smallint");
-        registerColumnType(Types.INTEGER, "integer");
-        registerColumnType(Types.BIGINT, "bigint");
-        registerColumnType(Types.FLOAT, "float");
-        registerColumnType(Types.REAL, "real");
-        registerColumnType(Types.DOUBLE, "double");
-        registerColumnType(Types.NUMERIC, "numeric");
-        registerColumnType(Types.DECIMAL, "decimal");
-        registerColumnType(Types.CHAR, "char");
-        registerColumnType(Types.VARCHAR, "varchar");
-        registerColumnType(Types.LONGVARCHAR, "longvarchar");
-        registerColumnType(Types.DATE, "date");
-        registerColumnType(Types.TIME, "time");
-        registerColumnType(Types.TIMESTAMP, "timestamp");
-
-        registerFunction("concat",
-                new StandardSQLFunction("concat", StandardBasicTypes.STRING));
+        super();
     }
 
     @Override
-    public boolean supportsIdentityColumns() {
-        return true;
+    protected void initializeFunctionRegistry(FunctionRegistry functionRegistry) {
+        super.initializeFunctionRegistry(functionRegistry);
+
+        functionRegistry.register(
+            "lower",
+            new NamedSqmFunctionDescriptor(
+                "lower",
+                true,
+                null,
+                StandardBasicTypes.STRING
+            )
+        );
     }
 
     @Override
-    public boolean hasDataTypeInIdentityColumn() {
+    public boolean dropConstraints() {
         return false;
     }
 
     @Override
-    public String getIdentityColumnString() {
-        return "integer";
+    public boolean hasAlterTable() {
+        return false;
     }
 
     @Override
-    public String getIdentitySelectString() {
-        return "select last_insert_rowid()";
+    public boolean qualifyIndexName() {
+        return false;
     }
 }
