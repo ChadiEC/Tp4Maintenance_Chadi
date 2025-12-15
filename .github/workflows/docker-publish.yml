@@ -36,7 +36,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }} 
-          password: ${{ secrets.k8s-ghcr-pull }}
+          password: ${{ secrets.k8s_ghcr_pull }}
 
       - name: Build Docker image
         run: docker build -t ghcr.io/chadiec/todo-api:$(git rev-parse --short HEAD) .
