@@ -2,11 +2,12 @@ package com.mariadb.todo.config;
 
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.function.StandardSQLFunction;
-import org.hibernate.type.descriptor.java.StringType;
+import org.hibernate.type.StandardBasicTypes; 
 
 public class SQLiteDialect extends Dialect {
     public SQLiteDialect() {
-        registerFunction("lower", new StandardSQLFunction("lower", StringType.INSTANCE));
+        
+        registerFunction("lower", new StandardSQLFunction("lower", StandardBasicTypes.STRING));
     }
 
     @Override
