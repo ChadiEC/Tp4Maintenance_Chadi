@@ -7,20 +7,20 @@ import org.hibernate.query.sqm.function.FunctionRegistry;
 
 public class SQLiteDialect extends Dialect {
     
+    // Empty constructor is fine
+    public SQLiteDialect() {
+    }
 
+    // This method is now used to register functions in Hibernate 6
     @Override
-    protected void initializeFunctionRegistry(FunctionRegistry functionRegistry) { 
+    protected void initializeFunctionRegistry(FunctionRegistry functionRegistry) {
         super.initializeFunctionRegistry(functionRegistry);
         
+        // Use functionRegistry.register and StandardBasicTypes.STRING
         functionRegistry.register(
             "lower", 
             new StandardSQLFunction("lower", StandardBasicTypes.STRING)
         );
-    }
-
-    
-    public SQLiteDialect() {
-        
     }
 
     @Override
@@ -28,4 +28,13 @@ public class SQLiteDialect extends Dialect {
         return false;
     }
 
+    @Override
+    public boolean hasAlterTable() {
+        return false;
+    }
+
+    @Override
+    public boolean qualifyIndexName() {
+        return false;
+    }
 }
